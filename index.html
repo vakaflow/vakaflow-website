@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="vakaflow - AI-Powered Options Trading Companion. Get smart trading recommendations from ChatGPT, Gemini, and Claude. Track your portfolio and join investment circles.">
+    <title>vakaflow - AI-Powered Options Trading Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #007AFF;
+            --primary-dark: #0056b3;
+            --secondary-color: #34C759;
+            --text-dark: #1a1a1a;
+            --text-gray: #666;
+            --bg-light: #f5f5f7;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--bg-white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        header {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            min-height: 44px; /* Touch-friendly size */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .cta-button:active {
+            background: var(--primary-dark);
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+        }
+
+        /* Animated Canoe with Currency Symbols */
+        .animated-canoe {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        .canoe-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .canoe-body {
+            fill: #007AFF;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .canoe-sail {
+            fill: #34C759;
+            animation: flutter 2s ease-in-out infinite;
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: translateX(0px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes flutter {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.95;
+                transform: scale(1.02);
+            }
+        }
+
+        .currency-symbol {
+            font-weight: bold;
+            font-size: 26px;
+            animation: pulse 2s ease-in-out infinite;
+            text-anchor: middle;
+        }
+
+        .currency-usd {
+            animation-delay: 0s;
+            fill: #28a745;
+            filter: drop-shadow(0 2px 4px rgba(40, 167, 69, 0.3));
+        }
+
+        .currency-btc {
+            animation-delay: 0.7s;
+            fill: #f7931a;
+            filter: drop-shadow(0 2px 4px rgba(247, 147, 26, 0.3));
+        }
+
+        .currency-inr {
+            animation-delay: 1.4s;
+            fill: #007AFF;
+            filter: drop-shadow(0 2px 4px rgba(0, 122, 255, 0.3));
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .wave {
+            fill: #007AFF;
+            opacity: 0.3;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .wave-1 {
+            animation-delay: 0s;
+        }
+
+        .wave-2 {
+            animation-delay: 0.5s;
+        }
+
+        .wave-3 {
+            animation-delay: 1s;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: translateX(0px);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: lowercase;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            min-height: 48px; /* Touch-friendly minimum size */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            display: inline-block;
+            min-height: 48px; /* Touch-friendly minimum size */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* AI Providers */
+        .ai-providers {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ai-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .ai-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .ai-card p {
+            color: var(--text-gray);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: var(--bg-light);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .step p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Header & Navigation */
+            nav {
+                padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                gap: 0.5rem;
+            }
+
+            .logo-img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .logo-text {
+                font-size: 1.25rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-button {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.9rem;
+            }
+
+            /* Hero Section */
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 1.5rem;
+            }
+
+            .animated-canoe {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 1.5rem;
+            }
+
+            .currency-symbol {
+                font-size: 18px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero .description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+                line-height: 1.7;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                padding: 1.125rem 2rem;
+                font-size: 1.05rem;
+                text-align: center;
+                min-height: 48px; /* Touch-friendly size */
+            }
+
+            /* Sections */
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Features Grid */
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+
+            /* AI Providers */
+            .ai-providers {
+                padding: 2rem 1rem;
+                margin-top: 2rem;
+            }
+
+            .ai-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .ai-card {
+                padding: 1.5rem;
+            }
+
+            /* Steps */
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .step {
+                padding: 1.5rem;
+            }
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            /* CTA Section */
+            .cta-section {
+                padding: 3rem 1.5rem;
+                border-radius: 16px;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section p {
+                font-size: 1.1rem;
+            }
+
+            /* Footer */
+            footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Disclaimer */
+            .disclaimer {
+                padding: 1.25rem;
+                margin: 1.5rem 0;
+            }
+
+            .disclaimer h4 {
+                font-size: 1.1rem;
+            }
+
+            .disclaimer p {
+                font-size: 0.9rem;
+            }
+
+            /* Vaka Story */
+            .vaka-story {
+                padding: 2rem 1rem;
+                margin: 2rem 0;
+            }
+
+            .vaka-story h2 {
+                font-size: 2rem;
+            }
+
+            .vaka-story .vaka-meaning {
+                font-size: 1.3rem;
+            }
+
+            .vaka-story .story-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Extra Small Devices */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .feature-card,
+            .ai-card,
+            .step {
+                padding: 1.25rem;
+            }
+        }
+
+        /* Disclaimer Box */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .disclaimer h4 {
+            color: #856404;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .disclaimer p {
+            color: #856404;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Vaka Story Section */
+        .vaka-story {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            text-align: center;
+            max-width: 1200px;
+        }
+
+        .vaka-story h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .vaka-story .vaka-meaning {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .vaka-story p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vaka-story .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .story-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .story-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .story-item p {
+            color: var(--text-gray);
+            font-size: 1rem;
+            margin: 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="logo.png" alt="vakaflow logo" class="logo-img">
+                <span class="logo-text">vakaflow</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#ai-providers">AI Providers</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+            <a href="#download" class="cta-button">Download Now</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Animated Canoe with Currency Symbols -->
+            <div class="animated-canoe">
+                <svg class="canoe-container" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Water Waves -->
+                    <path class="wave wave-1" d="M0,180 Q50,160 100,180 T200,180 L200,200 L0,200 Z" />
+                    <path class="wave wave-2" d="M0,190 Q50,170 100,190 T200,190 L200,200 L0,200 Z" />
+                    <path class="wave wave-3" d="M0,195 Q50,175 100,195 T200,195 L200,200 L0,200 Z" />
+                    
+                    <!-- Canoe Body -->
+                    <path class="canoe-body" d="M40,140 Q100,120 160,140 Q160,160 100,155 Q40,160 40,140 Z" />
+                    
+                    <!-- Sail -->
+                    <path class="canoe-sail" d="M100,140 L100,60 L140,140 Z" />
+                    
+                    <!-- Currency Symbols on Sail - representing diverse investments -->
+                    <text x="105" y="85" class="currency-symbol currency-usd" font-family="Arial, sans-serif">$</text>
+                    <text x="117" y="105" class="currency-symbol currency-btc" font-family="Arial, sans-serif">₿</text>
+                    <text x="128" y="125" class="currency-symbol currency-inr" font-family="Arial, sans-serif">₹</text>
+                    
+                    <!-- Mast -->
+                    <line x1="100" y1="140" x2="100" y2="60" stroke="#333" stroke-width="3" />
+                    
+                    <!-- Canoe Details -->
+                    <circle cx="80" cy="145" r="3" fill="#fff" opacity="0.8" />
+                    <circle cx="120" cy="145" r="3" fill="#fff" opacity="0.8" />
+                </svg>
+            </div>
+            <h1>vakaflow</h1>
+            <p class="subtitle">Navigate Your Investment Journey</p>
+            <p class="description">
+                Like a vaka (canoe) navigating the waters, let AI-powered recommendations guide you through options trading. 
+                Support for USD, Bitcoin, INR, and more. Track your portfolio, join investment circles, and sail toward smarter trades with ChatGPT, Gemini, and Claude.
+            </p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">Download on App Store</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vaka Story Section -->
+    <section class="vaka-story">
+        <h2>The Story Behind vakaflow</h2>
+        <p class="vaka-meaning">"Vaka" means <strong>canoe</strong> in Polynesian languages</p>
+        <p>
+            Just as a vaka (canoe) navigates the vast ocean, carrying travelers safely to their destination, 
+            vakaflow guides you through the complex waters of investment and trading. Our AI-powered platform 
+            is your vessel, helping you navigate market currents, avoid risks, and sail toward your financial goals.
+        </p>
+        
+        <div class="story-content">
+            <div class="story-item">
+                <h3>🌊 Navigate with Confidence</h3>
+                <p>
+                    Like skilled navigators reading the stars and currents, our AI analyzes market data, 
+                    trends, and patterns to guide your trading decisions. You're never sailing alone.
+                </p>
+            </div>
+            
+            <div class="story-item">
+                <h3>💰 Carrying Your Investments</h3>
+                <p>
+                    The currency symbols on our vaka (USD, Bitcoin, INR) represent the diverse investments 
+                    we support. Your vaka carries all your trading assets, keeping them organized and accessible.
+                </p>
+            </div>
+            
+            <div class="story-item">
+                <h3>🤝 Journey Together</h3>
+                <p>
+                    Traditional vakas were built for community journeys. Similarly, vakaflow's vakacircles 
+                    feature lets you collaborate with fellow traders, share insights, and learn from the community.
+                </p>
+            </div>
+            
+            <div class="story-item">
+                <h3>🧭 AI as Your Navigator</h3>
+                <p>
+                    In the past, navigators used knowledge passed down through generations. Today, vakaflow 
+                    uses cutting-edge AI (ChatGPT, Gemini, Claude) as your modern navigator, helping you make 
+                    informed decisions in real-time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">Powerful Features for Smart Trading</h2>
+        <p class="section-subtitle">Everything you need to make informed options trading decisions</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Multi-AI Recommendations</h3>
+                <p>Choose from ChatGPT, Gemini, or Claude for personalized trading recommendations. Each AI provides unique insights and analysis tailored to your trading style.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Real-Time Stock Analysis</h3>
+                <p>Access live market data from Yahoo Finance. Get detailed stock performance metrics, price trends, volume analysis, and comprehensive market insights.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3>Portfolio Management</h3>
+                <p>Track your options positions with real-time monitoring. Get P&L tracking, risk score calculations, expiration reminders, and performance analytics.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>vakacircles</h3>
+                <p>Join or create investment circles to collaborate with fellow traders. Share recommendations, discuss strategies, and learn from the community.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Historical Analysis</h3>
+                <p>Track recommendation accuracy over time. Calculate win rates, visualize performance with charts, and learn from past trading decisions.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Real-Time Alerts</h3>
+                <p>Get notified when opportunities arise or risks emerge. Stay ahead of market movements with timely alerts about portfolio changes and recommendations.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📬</div>
+                <h3>Recommendation Inbox</h3>
+                <p>Organize your trading opportunities with an email-style inbox. Easy browsing, filtering, and searching through all your recommendations.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3>Cryptocurrency Analysis</h3>
+                <p>Expand beyond traditional stocks with real-time crypto data from CoinGecko. Track crypto recommendations and diversify your trading portfolio.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎓</div>
+                <h3>Beginner-Friendly</h3>
+                <p>Learn options trading with plain English explanations, step-by-step instructions, risk assessments, and educational content built into every recommendation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section>
+        <div class="disclaimer">
+            <h4>⚠️ Important Disclaimer</h4>
+            <p>
+                vakaflow provides trading recommendations and market analysis for informational purposes only. 
+                All trading decisions and their consequences are the sole responsibility of the user. vakaflow is not a registered 
+                investment advisor, broker-dealer, or financial advisor. Past performance does not guarantee future results. 
+                Options trading involves substantial risk and is not suitable for all investors. vakaflow is not liable for any 
+                financial losses. Please consult with a licensed financial advisor before making investment decisions.
+            </p>
+        </div>
+    </section>
+
+    <!-- AI Providers Section -->
+    <section id="ai-providers">
+        <h2 class="section-title">Choose Your AI Provider</h2>
+        <p class="section-subtitle">Select the AI that works best for your trading style</p>
+
+        <div class="ai-grid">
+            <div class="ai-card">
+                <h3>ChatGPT</h3>
+                <p>Advanced conversational analysis with detailed explanations and strategic insights for your trading decisions.</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Google Gemini</h3>
+                <p>Comprehensive market insights with data-driven analysis and comprehensive market trend evaluation.</p>
+            </div>
+
+            <div class="ai-card">
+                <h3>Claude</h3>
+                <p>Strategic trading guidance with risk assessment and thoughtful analysis of market opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Get started in minutes</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Sign In</h3>
+                <p>Create your account with Sign in with Apple or Google. Quick, secure, and hassle-free authentication.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Set Up Profile</h3>
+                <p>Configure your investor profile with risk tolerance, experience level, and investment goals for personalized recommendations.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Get Recommendations</h3>
+                <p>Receive AI-powered trading recommendations with step-by-step instructions, risk assessments, and expected returns.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Track Performance</h3>
+                <p>Monitor your portfolio, track recommendation accuracy, and use historical data to improve your trading strategy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="download">
+        <h2>Ready to Transform Your Trading?</h2>
+        <p>Download vakaflow today and start making smarter, AI-powered trading decisions</p>
+        <a href="#" class="btn-primary" style="background: white; color: var(--primary-color);">Download on App Store</a>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Coming soon to the App Store</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>vakaflow</h3>
+                <p>AI-Powered Options Trading Companion</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="support.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Features</h3>
+                <ul>
+                    <li><a href="#features">AI Recommendations</a></li>
+                    <li><a href="#features">Portfolio Tracking</a></li>
+                    <li><a href="#features">vakacircles</a></li>
+                    <li><a href="#features">Historical Analysis</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="support.html">Terms of Service</a></li>
+                    <li><a href="support.html">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 vakaflow. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+                Trading involves substantial risk. Please trade responsibly.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+
